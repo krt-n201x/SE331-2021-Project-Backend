@@ -84,27 +84,27 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .name("Sinovac")
                 .date_injected("July 14 2021")
                 .build());
-        pat1.getVaccine().add(tempVac);
+        tempVac.setPatient(pat1);
         tempVac = vaccineRepository.save(Vaccine.builder()
                 .name("Astrazeneca")
                 .date_injected("August 12 2021")
                 .build());
-        pat1.getVaccine().add(tempVac);
+        tempVac.setPatient(pat1);
         tempVac = vaccineRepository.save(Vaccine.builder()
                 .name("Sinovac")
                 .date_injected("July 14 2021")
                 .build());
-        pat2.getVaccine().add(tempVac);
+        tempVac.setPatient(pat2);
         tempVac = vaccineRepository.save(Vaccine.builder()
                 .name("Sinovac")
                 .date_injected("August 14 2021")
                 .build());
-        pat2.getVaccine().add(tempVac);
+        tempVac.setPatient(pat2);
         tempVac = vaccineRepository.save(Vaccine.builder()
                 .name("Sinovac")
                 .date_injected("August 20 2021")
                 .build());
-        pat3.getVaccine().add(tempVac);
+        tempVac.setPatient(pat3);
         addUser();
     }
     User user1, user2, user3;
