@@ -18,23 +18,6 @@ public class VaccineController {
     @Autowired
     VaccineService vaccineService;
 
-    @GetMapping("vaccines")
-    public ResponseEntity<?> getVaccineLists(@RequestParam(value = "_limit", required = false) Integer perPage
-            , @RequestParam(value = "_page", required = false) Integer page, @RequestParam(value = "name", required = false) String title) {
-        perPage = perPage == null ? 3 : perPage;
-        page = page == null ? 1 : page;
-        Page<Vaccine> pageOutput;
-        if (title == null) {
-            pageOutput = vaccineService.getVaccines(perPage, page);
-        } else {
-            pageOutput = vaccineService.getVaccines(title, PageRequest.of(page - 1, perPage));
-        }
-        HttpHeaders responseHeader = new HttpHeaders();
-        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(LabMapper.INSTANCE.getVaccineDto(pageOutput.getContent()), responseHeader, HttpStatus.OK);
-
-    }
-
     @GetMapping("vaccines/{id}")
     public ResponseEntity<?> getVaccine(@PathVariable("id") Long id) {
 

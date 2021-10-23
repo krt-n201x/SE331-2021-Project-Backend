@@ -9,5 +9,4 @@ public interface VaccineService {
     Integer getVaccineSize();
     Page<Vaccine> getVaccines(Integer pageSize, Integer page);
     Vaccine getVaccine(Long id);
-    Page<Vaccine> getVaccines(String title, Pageable pageable);
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import se331.lab.rest.dao.DoctorDao;
 import se331.lab.rest.dao.PatientDao;
 import se331.lab.rest.entity.Doctor;
-import se331.lab.rest.entity.Doctors;
 import se331.lab.rest.entity.Patients;
 
 @Service
@@ -31,13 +30,14 @@ public class DoctorServiceImpl implements DoctorService{
         return doctorDao.getDoctor(id);
     }
 
-    @Override
-    public Doctor save(Doctor doctor) {
-        Patients patients = patientDao.findById(doctor.getPatient().getId()).orElse(null);
-        patients.setDoctor(doctor);
-        doctor.getPatient().add(patients);
-        return doctorDao.save(doctor);
-    }
+//    @Override
+//    public Doctor save(Doctor doctor) {
+//        Patients patients = patientDao.findById(doctor.getPatient().getId()).orElse(null);
+//        patients.setDoctor(doctor);
+//        doctor.getPatient().add(patients);
+//        return doctorDao.save(doctor);
+//
+//    }
 
     @Override
     public Page<Doctor> getDoctors(String title, Pageable pageable) {

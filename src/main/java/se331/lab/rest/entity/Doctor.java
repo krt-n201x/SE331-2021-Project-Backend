@@ -21,5 +21,5 @@ public class Doctor {
     @OneToMany(mappedBy = "doctor")
     List<Patients> patient;
     @ElementCollection
-    List<String> photo;
+    List<String> docImageUrl;
 }

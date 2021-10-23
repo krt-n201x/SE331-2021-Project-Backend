@@ -105,6 +105,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .date_injected("August 20 2021")
                 .build());
         pat3.getVaccine().add(tempVac);
+        addUser();
     }
     User user1, user2, user3;
     private void addUser(){

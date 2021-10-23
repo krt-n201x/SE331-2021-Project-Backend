@@ -14,11 +14,11 @@ public class Vaccine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
-    Long vac_id;
+    Long id;
     String name;
     String date_injected;
     @ManyToOne
     Patients patient;
     @ElementCollection
-    List<String> photo;
+    List<String> vacImageUrl;
 }

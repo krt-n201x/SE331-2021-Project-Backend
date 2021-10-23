@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import se331.lab.rest.entity.Vaccine;
-import se331.lab.rest.entity.Vaccines;
 import se331.lab.rest.repository.VaccineRepository;
 
 @Repository
@@ -31,8 +30,4 @@ public class VaccineDaoDbImpl implements VaccineDao {
         return vaccineRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public Page<Vaccine> getVaccine(String title, Pageable page) {
-        return vaccineRepository.findByTitleIgnoreCaseContainingOrDescriptionIgnoreCaseContainingOrOrganizer_NameIgnoreCaseContaining(title,title,title,page);
-    }
 }

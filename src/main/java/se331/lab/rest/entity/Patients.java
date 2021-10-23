@@ -1,6 +1,7 @@
 package se331.lab.rest.entity;
 
 import lombok.*;
+import se331.lab.rest.security.entity.User;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,10 +22,12 @@ public class Patients {
     Integer age;
     String hometown;
     String doctor_comm;
-    @OneToMany(mappedBy = "patient")
-    List<Vaccine> vaccine;
+    @OneToOne
+    User user;
     @ManyToOne
     Doctor doctor;
+    @OneToMany(mappedBy = "patient")
+    List<Vaccine> vaccine;
     @ElementCollection
-    List<String> photo;
+    List<String> imageUrl;
 }

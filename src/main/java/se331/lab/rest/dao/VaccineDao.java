@@ -8,5 +8,4 @@ public interface VaccineDao {
     Integer getVaccineSize();
     Page<Vaccine> getVaccines(Integer pageSize, Integer page);
     Vaccine getVaccine(Long id);
-    Page<Vaccine> getVaccine(String name, Pageable page);
 }

@@ -25,9 +25,4 @@ public class VaccineServiceImpl implements VaccineService{
     public Vaccine getVaccine(Long id) {
         return vaccineDao.getVaccine(id);
     }
-
-    @Override
-    public Page<Vaccine> getVaccines(String title, Pageable pageable) {
-        return vaccineDao.getVaccine(title,pageable);
-    }
 }

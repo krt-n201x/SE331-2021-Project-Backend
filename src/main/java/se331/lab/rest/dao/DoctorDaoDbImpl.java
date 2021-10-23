@@ -7,8 +7,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import se331.lab.rest.entity.Doctor;
-import se331.lab.rest.entity.Doctors;
 import se331.lab.rest.repository.DoctorRepository;
+
+import java.util.Optional;
 
 @Repository
 @Profile("db")
@@ -34,6 +35,11 @@ public class DoctorDaoDbImpl implements DoctorDao {
     @Override
     public Doctor save(Doctor doctor) {
         return doctorRepository.save(doctor);
+    }
+
+    @Override
+    public Optional<Doctor> findById(Long id) {
+        return doctorRepository.findById(id);
     }
 
     @Override

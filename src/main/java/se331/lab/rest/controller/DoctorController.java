@@ -48,8 +48,8 @@ public class DoctorController {
 
     @PostMapping("/doctors")
     public ResponseEntity<?> addDoctor(@RequestBody Doctor Doctor) {
-        Doctor output = doctorService.save(Doctor);
-        return ResponseEntity.ok(LabMapper.INSTANCE.getDoctorDto(output));
+        //Doctor output = doctorService.save(Doctor);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getDoctorDto(Doctor));
 
 
     }
