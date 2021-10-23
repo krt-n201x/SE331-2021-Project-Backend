@@ -6,8 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import se331.lab.rest.entity.Patients;
 import se331.lab.rest.entity.Vaccine;
 import se331.lab.rest.repository.VaccineRepository;
+
+import java.util.Optional;
 
 @Repository
 @Profile("db")
@@ -28,6 +31,16 @@ public class VaccineDaoDbImpl implements VaccineDao {
     @Override
     public Vaccine getVaccine(Long id) {
         return vaccineRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Vaccine save(Vaccine vac) {
+        return vaccineRepository.save(vac);
+    }
+
+    @Override
+    public Page<Vaccine> getVaccine(String title, Pageable page) {
+        return vaccineRepository.findByNameIgnoreCaseContaining(title,page);
     }
 
 }

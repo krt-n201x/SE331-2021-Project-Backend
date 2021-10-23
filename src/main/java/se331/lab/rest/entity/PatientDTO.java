@@ -22,5 +22,6 @@ public class PatientDTO {
     Integer age;
     String hometown;
     String doctor_comm;
-    Doctor doctor;
+    PatientDoctorDTO doctor;
+    List<PatientVaccineDTO> vaccine;
 }

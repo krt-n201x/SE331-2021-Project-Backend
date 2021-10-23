@@ -5,17 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.ManyToOne;
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VaccineDTO {
+public class VaccinePatientDTO {
     Long id;
     String name;
-    String date_injected;
-    VaccinePatientDTO patient;
+    String surname;
+    Integer age;
+    String hometown;
+    String doctor_comm;
 }

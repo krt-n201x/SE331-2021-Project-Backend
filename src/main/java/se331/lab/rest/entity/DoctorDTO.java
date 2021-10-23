@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -13,4 +16,5 @@ public class DoctorDTO {
     String name;
     String surname;
     Integer age;
+    List<DoctorPatientDTO> patient;
 }

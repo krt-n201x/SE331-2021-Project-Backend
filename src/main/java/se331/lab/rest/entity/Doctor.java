@@ -3,6 +3,7 @@ package se331.lab.rest.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,7 +20,8 @@ public class Doctor {
     String surname;
     Integer age;
     @OneToMany(mappedBy = "doctor")
-    List<Patients> patient;
+            @Builder.Default
+    List<Patients> patient = new ArrayList<>();
     @ElementCollection
     List<String> docImageUrl;
 }

@@ -20,7 +20,7 @@ public interface LabMapper {
     List<DoctorDTO> getDoctorDto(List<Doctor> docs);
 
     VaccineDTO getVaccineDto(Vaccine vac);
-    List<PatientDTO> getVaccineDto(List<Vaccine> vacs);
+    List<VaccineDTO> getVaccineDto(List<Vaccine> vacs);
 
     @Mapping(target = "authorities",
             expression = "java(pat.getUser().getAuthorities().stream().map(auth -> auth.getName().name()).collect(Collectors.toList()))")

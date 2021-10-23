@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import se331.lab.rest.dao.DoctorDao;
 import se331.lab.rest.dao.PatientDao;
+import se331.lab.rest.dao.VaccineDao;
 import se331.lab.rest.entity.Doctor;
 import se331.lab.rest.entity.Patients;
+import se331.lab.rest.entity.Vaccine;
 
 import javax.print.Doc;
 
@@ -17,6 +19,8 @@ public class PatientServiceImpl implements PatientService{
     PatientDao patientDao;
     @Autowired
     DoctorDao doctorDao;
+    @Autowired
+    VaccineDao vaccineDao;
     @Override
     public Integer getPatientSize() {
         return patientDao.getPatientSize();
