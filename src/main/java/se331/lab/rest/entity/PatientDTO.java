@@ -5,21 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.ManyToMany;
+import javax.persistence.ElementCollection;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganizerOwnEventsDTO {
+public class PatientDTO {
     Long id;
-    String category;
-    String title;
-    String description;
-    String location;
-    String date;
-    String time;
-    Boolean petAllowed;
-    List<Participant> participants;
+    String name;
+    String surname;
+    String status;
+    Integer age;
+    String hometown;
+    String doctor_comm;
+    Doctor doctor;
 }

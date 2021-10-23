@@ -6,11 +6,12 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import se331.lab.rest.entity.Event;
-import se331.lab.rest.entity.Organizer;
-import se331.lab.rest.repository.EventRepository;
-import se331.lab.rest.repository.OrganizerRepository;
-import se331.lab.rest.repository.ParticipantRepository;
+import se331.lab.rest.entity.Doctor;
+import se331.lab.rest.entity.Patients;
+import se331.lab.rest.entity.Vaccine;
+import se331.lab.rest.repository.DoctorRepository;
+import se331.lab.rest.repository.PatientRepository;
+import se331.lab.rest.repository.VaccineRepository;
 import se331.lab.rest.security.entity.Authority;
 import se331.lab.rest.security.entity.AuthorityName;
 import se331.lab.rest.security.entity.User;
@@ -25,77 +26,85 @@ import java.util.Date;
 @Component
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     @Autowired
-    EventRepository eventRepository;
+    DoctorRepository doctorRepository;
     @Autowired
     AuthorityRepository authorityRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
-    OrganizerRepository organizerRepository;
+    VaccineRepository vaccineRepository;
     @Autowired
-    ParticipantRepository participantRepository;
+    PatientRepository patientRepository;
     @Override
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        Organizer org1,org2,org3;
-        org1 = organizerRepository.save(Organizer.builder()
-                .name("CAMT").build());
-        org2 = organizerRepository.save(Organizer.builder()
-                .name("CMU").build());
-        org3 = organizerRepository.save(Organizer.builder()
-        .name("ChiangMai").build());
-        Event tempEvent;
-        tempEvent = eventRepository.save(Event.builder()
-                .category("Academic")
-                .title("Midterm Exam")
-                .description("A time for taking the exam")
-                .location("CAMT Building")
-                .date("3rd Sept")
-                .time("3.00-4.00 pm.")
-                .petAllowed(false)
+        Patients pat1,pat2,pat3;
+        Doctor doc1,doc2,doc3;
+        pat1 = patientRepository.save(Patients.builder()
+                .name("John")
+                .surname("Doe")
+                .status("Taken 2 doses")
+                .age(42)
+                .hometown("Chiang Mai, Thailand")
+                .doctor_comm("Nothing").build());
+        pat2 = patientRepository.save(Patients.builder()
+                .name("Will")
+                .surname("Smith")
+                .status("Taken 1 doses")
+                .age(30)
+                .hometown("Chiang Rai, Thailand")
+                .doctor_comm("I love your muscle").build());
+        pat3 = patientRepository.save(Patients.builder()
+                .name("Swift")
+                .surname("Taylor")
+                .status("Taken 1 doses")
+                .age(31)
+                .hometown("Bangkok, Thailand")
+                .doctor_comm("something bangsat").build());
+        doc1 = doctorRepository.save(Doctor.builder()
+                .name("Peerapat")
+                .surname("Thungngoen")
+                .age(21)
                 .build());
-        tempEvent.setOrganizer(org1);
-        org1.getOwnEvents().add(tempEvent);
-        tempEvent = eventRepository.save(Event.builder()
-                .category("Academic")
-                .title("Commencement Day")
-                .description("A time for celebration")
-                .location("CMU Convention hall")
-                .date("21th Jan")
-                .time("8.00am-4.00 pm.")
-                .petAllowed(false)
+        doc2 = doctorRepository.save(Doctor.builder()
+                .name("Kanoknart")
+                .surname("Something")
+                .age(6)
                 .build());
-        tempEvent.setOrganizer(org1);
-        org1.getOwnEvents().add(tempEvent);
-        tempEvent = eventRepository.save(Event.builder()
-                .category("Cultural")
-                .title("Loy Krathong")
-                .description("A time for Krathong")
-                .location("Ping River")
-                .date("21th Nov")
-                .time("8.00-10.00 pm.")
-                .petAllowed(false)
+        doc3 = doctorRepository.save(Doctor.builder()
+                .name("Kitsada")
+                .surname("Something")
+                .age(204)
                 .build());
-        tempEvent.setOrganizer(org2);
-        org2.getOwnEvents().add(tempEvent);
-        tempEvent = eventRepository.save(Event.builder()
-                .category("Cultural")
-                .title("Songkran")
-                .description("Let's Play Water")
-                .location("Chiang Mai Moat")
-                .date("13th April")
-                .time("10.00am - 6.00 pm.")
-                .petAllowed(true)
+        pat1.setDoctor(doc1);
+        pat2.setDoctor(doc2);
+        pat3.setDoctor(doc3);
+        Vaccine tempVac;
+        tempVac = vaccineRepository.save(Vaccine.builder()
+                .name("Sinovac")
+                .date_injected("July 14 2021")
                 .build());
-        tempEvent.setOrganizer(org3);
-        org3.getOwnEvents().add(tempEvent);
-        addUser();
-        org1.setUser(user1);
-        user1.setOrganizer(org1);
-        org2.setUser(user2);
-        user2.setOrganizer(org2);
-        org3.setUser(user3);
-        user3.setOrganizer(org3);
+        pat1.getVaccine().add(tempVac);
+        tempVac = vaccineRepository.save(Vaccine.builder()
+                .name("Astrazeneca")
+                .date_injected("August 12 2021")
+                .build());
+        pat1.getVaccine().add(tempVac);
+        tempVac = vaccineRepository.save(Vaccine.builder()
+                .name("Sinovac")
+                .date_injected("July 14 2021")
+                .build());
+        pat2.getVaccine().add(tempVac);
+        tempVac = vaccineRepository.save(Vaccine.builder()
+                .name("Sinovac")
+                .date_injected("August 14 2021")
+                .build());
+        pat2.getVaccine().add(tempVac);
+        tempVac = vaccineRepository.save(Vaccine.builder()
+                .name("Sinovac")
+                .date_injected("August 20 2021")
+                .build());
+        pat3.getVaccine().add(tempVac);
     }
     User user1, user2, user3;
     private void addUser(){

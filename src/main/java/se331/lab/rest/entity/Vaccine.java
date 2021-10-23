@@ -1,10 +1,8 @@
 package se331.lab.rest.entity;
 
 import lombok.*;
-import se331.lab.rest.security.entity.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,15 +10,15 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Organizer {
+public class Vaccine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
-    Long id;
+    Long vac_id;
     String name;
-    @OneToMany(mappedBy = "organizer")
-    @Builder.Default
-    List<Event> ownEvents = new ArrayList<>();
-    @OneToOne
-    User user;
+    String date_injected;
+    @ManyToOne
+    Patients patient;
+    @ElementCollection
+    List<String> photo;
 }

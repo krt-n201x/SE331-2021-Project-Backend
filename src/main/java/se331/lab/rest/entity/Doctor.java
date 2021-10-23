@@ -10,13 +10,16 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Participant {
+public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     Long id;
     String name;
-    String telNo;
-    @ManyToMany
-    List<Event> eventHistory;
+    String surname;
+    Integer age;
+    @OneToMany(mappedBy = "doctor")
+    List<Patients> patient;
+    @ElementCollection
+    List<String> photo;
 }
