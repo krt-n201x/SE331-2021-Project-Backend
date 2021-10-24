@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import se331.lab.rest.dao.PatientDao;
 import se331.lab.rest.entity.Patients;
 import se331.lab.rest.service.PatientService;
 import se331.lab.rest.util.LabMapper;
@@ -17,7 +18,8 @@ import se331.lab.rest.util.LabMapper;
 public class PatientController {
     @Autowired
     PatientService patientService;
-
+    @Autowired
+    PatientDao patientDao;
     @GetMapping("patients")
     public ResponseEntity<?> getPatientLists(@RequestParam(value = "_limit", required = false) Integer perPage
             , @RequestParam(value = "_page", required = false) Integer page, @RequestParam(value = "name", required = false) String title) {
@@ -52,5 +54,12 @@ public class PatientController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDto(output));
 
 
+    }
+    @PostMapping("/comment")
+    public ResponseEntity<?> addCommentPatient(@RequestBody Patients patient) {
+        Patients changeCom = patientDao.findById(patient.getId()).orElse(null);
+        changeCom.setDoctor_comm(patient.getDoctor_comm());
+        Patients output = patientService.save(changeCom);   
+        return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDto(output));
     }
 }
