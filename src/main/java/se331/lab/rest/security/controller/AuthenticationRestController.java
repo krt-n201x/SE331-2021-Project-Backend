@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import se331.lab.rest.dao.DoctorDao;
+import se331.lab.rest.entity.Doctor;
+import se331.lab.rest.repository.DoctorRepository;
 import se331.lab.rest.security.JwtTokenUtil;
 import se331.lab.rest.security.entity.JwtUser;
 import se331.lab.rest.security.entity.User;
@@ -44,6 +47,8 @@ public class AuthenticationRestController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    DoctorRepository doctorRepository;
     @PostMapping("${jwt.route.authentication.path}")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
 
@@ -85,15 +90,20 @@ public class AuthenticationRestController {
         }
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registerdoc")
     public ResponseEntity<?> addUser(@RequestBody User user) {
-
+        Doctor doc = doctorRepository.save(Doctor.builder()
+                .name(user.getFirstname())
+                .surname(user.getLastname())
+                .build());
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         user.setEmail(user.getEmail());
         user.setFirstname(user.getFirstname());
         user.setLastname(user.getLastname());
         user.setEnabled(true);
+        user.setDoctor(doc);
+        doc.setUser(user);
         User output = userRepository.save(user);
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDto(output));
 
