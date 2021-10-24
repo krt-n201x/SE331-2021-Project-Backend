@@ -64,7 +64,7 @@ public class User {
     private List<Authority> authorities = new ArrayList<>();
 
 	@OneToOne
-    Doctor organizer;
+    Doctor doctor;
     @OneToOne
     Patients patient;
 
