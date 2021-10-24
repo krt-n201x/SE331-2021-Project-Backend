@@ -68,4 +68,7 @@ public class User {
     @OneToOne
     Patients patient;
 
+    String hometown;
+    Integer age;
+
 }

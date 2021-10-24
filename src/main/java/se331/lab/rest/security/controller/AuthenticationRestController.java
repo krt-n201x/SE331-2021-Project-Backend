@@ -17,7 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import se331.lab.rest.dao.DoctorDao;
 import se331.lab.rest.entity.Doctor;
+import se331.lab.rest.entity.Patients;
 import se331.lab.rest.repository.DoctorRepository;
+import se331.lab.rest.repository.PatientRepository;
 import se331.lab.rest.security.JwtTokenUtil;
 import se331.lab.rest.security.entity.JwtUser;
 import se331.lab.rest.security.entity.User;
@@ -49,6 +51,8 @@ public class AuthenticationRestController {
 
     @Autowired
     DoctorRepository doctorRepository;
+    @Autowired
+    PatientRepository patientRepository;
     @PostMapping("${jwt.route.authentication.path}")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
 
@@ -91,10 +95,11 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("/registerdoc")
-    public ResponseEntity<?> addUser(@RequestBody User user) {
+    public ResponseEntity<?> addDoc(@RequestBody User user) {
         Doctor doc = doctorRepository.save(Doctor.builder()
                 .name(user.getFirstname())
                 .surname(user.getLastname())
+                .age(user.getAge())
                 .build());
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
@@ -106,8 +111,26 @@ public class AuthenticationRestController {
         doc.setUser(user);
         User output = userRepository.save(user);
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDto(output));
+    }
 
-
+    @PostMapping("/registerpat")
+    public ResponseEntity<?> addPat(@RequestBody User user) {
+        Patients pat = patientRepository.save(Patients.builder()
+                .name(user.getFirstname())
+                .surname(user.getLastname())
+                .hometown(user.getHometown())
+                .age(user.getAge())
+                .build());
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setEmail(user.getEmail());
+        user.setFirstname(user.getFirstname());
+        user.setLastname(user.getLastname());
+        user.setEnabled(true);
+        user.setPatient(pat);
+        pat.setUser(user);
+        User output = userRepository.save(user);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDto(output));
     }
 
 
