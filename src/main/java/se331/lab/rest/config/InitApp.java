@@ -117,6 +117,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authUser = Authority.builder().name(AuthorityName.ROLE_USER).build();
         Authority authAdmin = Authority.builder().name(AuthorityName.ROLE_ADMIN).build();
+        Authority authDoctor = Authority.builder().name(AuthorityName.ROLE_DOCTOR).build();
         user1 = User.builder()
                 .username("admin")
                 .password(encoder.encode("admin"))
@@ -150,6 +151,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         user1.getAuthorities().add(authAdmin);
         user2.getAuthorities().add(authUser);
         user3.getAuthorities().add(authUser);
+        user3.getAuthorities().add(authDoctor);
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
