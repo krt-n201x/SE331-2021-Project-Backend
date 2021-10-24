@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import se331.lab.rest.entity.*;
+import se331.lab.rest.entity.DoctorAuthDTO;
 import se331.lab.rest.security.entity.User;
 import se331.lab.rest.security.entity.UserDTO;
 
@@ -23,8 +24,18 @@ public interface LabMapper {
     List<VaccineDTO> getVaccineDto(List<Vaccine> vacs);
 
     @Mapping(target = "authorities",
+            expression = "java(doc.getUser().getAuthorities().stream().map(auth -> auth.getName().name()).collect(Collectors.toList()))")
+    DoctorAuthDTO getDoctorAuthDTO(Doctor doc);
+
+
+    @Mapping(target = "authorities",
             expression = "java(pat.getUser().getAuthorities().stream().map(auth -> auth.getName().name()).collect(Collectors.toList()))")
     PatientAuthDTO getPatientAuthDTO(Patients pat);
 
     UserDTO getUserDto(User user);
+
+
+
+
+
 }

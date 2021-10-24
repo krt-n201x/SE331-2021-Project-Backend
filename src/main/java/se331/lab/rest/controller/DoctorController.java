@@ -10,13 +10,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se331.lab.rest.entity.Doctor;
+import se331.lab.rest.security.entity.User;
+import se331.lab.rest.security.repository.UserRepository;
 import se331.lab.rest.service.DoctorService;
 import se331.lab.rest.util.LabMapper;
+
+import java.util.Optional;
 
 @Controller
 public class DoctorController {
     @Autowired
     DoctorService doctorService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("doctors")
     public ResponseEntity<?> getDoctorLists(@RequestParam(value = "_limit", required = false) Integer perPage
@@ -47,10 +54,11 @@ public class DoctorController {
     }
 
     @PostMapping("/doctors")
-    public ResponseEntity<?> addDoctor(@RequestBody Doctor Doctor) {
-        //Doctor output = doctorService.save(Doctor);
-        return ResponseEntity.ok(LabMapper.INSTANCE.getDoctorDto(Doctor));
-
-
+    public ResponseEntity<?> addDoctor(@RequestBody Doctor doctor) {
+//        User user = userRepository.findById(userid).orElse(null);
+//        doctor.setUser(user);
+//        user.setDoctor(doctor);
+        Doctor output = doctorService.save(doctor);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getDoctorDto(output));
     }
 }

@@ -30,14 +30,12 @@ public class DoctorServiceImpl implements DoctorService{
         return doctorDao.getDoctor(id);
     }
 
-//    @Override
-//    public Doctor save(Doctor doctor) {
-//        Patients patients = patientDao.findById(doctor.getPatient().getId()).orElse(null);
-//        patients.setDoctor(doctor);
-//        doctor.getPatient().add(patients);
-//        return doctorDao.save(doctor);
-//
-//    }
+    @Override
+    public Doctor save(Doctor doctor) {
+
+        return doctorDao.save(doctor);
+
+    }
 
     @Override
     public Page<Doctor> getDoctors(String title, Pageable pageable) {
