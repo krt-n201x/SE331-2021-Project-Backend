@@ -5,13 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import se331.lab.rest.entity.Event;
-import se331.lab.rest.entity.Organizer;
 import se331.lab.rest.security.JwtUserFactory;
 import se331.lab.rest.security.entity.User;
 import se331.lab.rest.security.repository.UserRepository;
-
-import javax.transaction.Transactional;
 
 /**
  * Created by stephan on 20.03.16.

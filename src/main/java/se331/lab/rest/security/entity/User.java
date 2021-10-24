@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import se331.lab.rest.entity.Organizer;
+import se331.lab.rest.entity.Patients;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -62,7 +62,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Authority> authorities = new ArrayList<>();
 
-	@OneToOne
-    Organizer organizer;
+//	@OneToOne
+//    Organizer organizer;
+    @OneToOne
+    Patients patient;
 
 }

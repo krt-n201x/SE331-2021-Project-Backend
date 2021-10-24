@@ -12,15 +12,24 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Organizer {
+public class Patients {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     Long id;
     String name;
-    @OneToMany(mappedBy = "organizer")
-    @Builder.Default
-    List<Event> ownEvents = new ArrayList<>();
+    String surname;
+    String status;
+    Integer age;
+    String hometown;
+    String doctor_comm;
     @OneToOne
     User user;
+    @ManyToOne
+    Doctor doctor;
+    @OneToMany(mappedBy = "patient")
+    @Builder.Default
+    List<Vaccine> vaccine = new ArrayList<>();
+    @ElementCollection
+    List<String> imageUrl;
 }

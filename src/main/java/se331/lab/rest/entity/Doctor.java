@@ -3,6 +3,7 @@ package se331.lab.rest.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -10,13 +11,17 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Participant {
+public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     Long id;
     String name;
-    String telNo;
-    @ManyToMany
-    List<Event> eventHistory;
+    String surname;
+    Integer age;
+    @OneToMany(mappedBy = "doctor")
+            @Builder.Default
+    List<Patients> patient = new ArrayList<>();
+    @ElementCollection
+    List<String> docImageUrl;
 }
