@@ -87,9 +87,12 @@ public class AuthenticationRestController {
 
     @PostMapping("/register")
     public ResponseEntity<?> addUser(@RequestBody User user) {
+
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         user.setEmail(user.getEmail());
+        user.setFirstname(user.getFirstname());
+        user.setLastname(user.getLastname());
         user.setEnabled(true);
         User output = userRepository.save(user);
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDto(output));

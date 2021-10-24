@@ -21,7 +21,7 @@ public class Doctor {
     String surname;
     Integer age;
     @OneToMany(mappedBy = "doctor")
-            @Builder.Default
+    @Builder.Default
     List<Patients> patient = new ArrayList<>();
     @ElementCollection
     List<String> docImageUrl;
