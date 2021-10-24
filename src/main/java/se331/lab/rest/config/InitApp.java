@@ -114,8 +114,13 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         tempVac.setPatient(pat3);
         pat3.getVaccine().add(tempVac);
         addUser();
-        doc1.setUser(user1);
-        user1.setDoctor(doc1);
+
+        doc1.setUser(user3);
+        user3.setDoctor(doc1);
+        pat1.setUser(user1);
+        user1.setPatient(pat1);
+        doc2.setUser(user1);
+        user1.setDoctor(doc2);
     }
     User user1, user2, user3;
     private void addUser(){
