@@ -79,6 +79,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         pat1.setDoctor(doc1);
         pat2.setDoctor(doc2);
         pat3.setDoctor(doc3);
+        pat1.getImageUrl().add("https://www.img.in.th/images/30ace35710f11b4a7f21f7295e508df5.png");
+        pat2.getImageUrl().add("https://www.img.in.th/images/30ace35710f11b4a7f21f7295e508df5.png");
+        pat3.getImageUrl().add("https://www.img.in.th/images/a2bf62a37f1666840b96d4b5b636dadf.png");
         Vaccine tempVac;
         tempVac = vaccineRepository.save(Vaccine.builder()
                 .name("Sinovac")
@@ -116,6 +119,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     private void addUser(){
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         Authority authUser = Authority.builder().name(AuthorityName.ROLE_USER).build();
+        Authority authDoctor = Authority.builder().name(AuthorityName.ROLE_DOCTOR).build();
         Authority authAdmin = Authority.builder().name(AuthorityName.ROLE_ADMIN).build();
         user1 = User.builder()
                 .username("admin")
@@ -136,12 +140,12 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021,01,01).atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
         user3 = User.builder()
-                .username("disableUser")
-                .password(encoder.encode("disableUser"))
-                .firstname("disableUser")
-                .lastname("disableUser")
-                .email("disableUser@user.com")
-                .enabled(false)
+                .username("doctor")
+                .password(encoder.encode("doctor"))
+                .firstname("doctor")
+                .lastname("doctor")
+                .email("doctor@doctor.com")
+                .enabled(true)
                 .lastPasswordResetDate(Date.from(LocalDate.of(2021,01,01).atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .build();
         authorityRepository.save(authUser);
@@ -150,6 +154,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         user1.getAuthorities().add(authAdmin);
         user2.getAuthorities().add(authUser);
         user3.getAuthorities().add(authUser);
+        user3.getAuthorities().add(authDoctor);
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);

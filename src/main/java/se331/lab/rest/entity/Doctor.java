@@ -1,6 +1,7 @@
 package se331.lab.rest.entity;
 
 import lombok.*;
+import se331.lab.rest.security.entity.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,4 +25,6 @@ public class Doctor {
     List<Patients> patient = new ArrayList<>();
     @ElementCollection
     List<String> docImageUrl;
+    @OneToOne
+    User user;
 }
