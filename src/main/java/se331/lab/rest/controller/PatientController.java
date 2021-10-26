@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se331.lab.rest.dao.DoctorDao;
 import se331.lab.rest.dao.PatientDao;
+import se331.lab.rest.dao.VaccineDao;
 import se331.lab.rest.entity.Doctor;
 import se331.lab.rest.entity.Patients;
+import se331.lab.rest.entity.Vaccine;
+import se331.lab.rest.repository.VaccineRepository;
 import se331.lab.rest.service.DoctorService;
 import se331.lab.rest.service.PatientService;
 import se331.lab.rest.util.LabMapper;
@@ -27,6 +30,8 @@ public class PatientController {
     PatientService patientService;
     @Autowired
     PatientDao patientDao;
+    @Autowired
+    VaccineRepository vaccineRepository;
     @GetMapping("patients")
     public ResponseEntity<?> getPatientLists(@RequestParam(value = "_limit", required = false) Integer perPage
             , @RequestParam(value = "_page", required = false) Integer page, @RequestParam(value = "name", required = false) String title) {
@@ -83,6 +88,19 @@ public class PatientController {
         doctor.getPatient().add(changeDoc);
 //        Doctor outputDoctor = doctorService.save(doctor);
         Patients output = patientService.save(changeDoc);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDto(output));
+    }
+
+    @PostMapping("/savevac")
+    public ResponseEntity<?> saveVac(@RequestBody Patients patient) {
+        Patients addVac = patientDao.findById(patient.getId()).orElse(null);
+        Vaccine vaccine = vaccineRepository.save(Vaccine.builder()
+                        .name(patient.getVaccine().get(0).getName())
+                .date_injected(patient.getVaccine().get(0).getDate_injected()).build()
+                );
+        addVac.getVaccine().add(vaccine);
+        vaccine.setPatient(addVac);
+        Patients output = patientService.save(addVac);
         return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDto(output));
     }
 
