@@ -71,7 +71,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/registerpat").permitAll()
                 .antMatchers(HttpMethod.POST, "/events").hasRole("ADMIN")
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter
