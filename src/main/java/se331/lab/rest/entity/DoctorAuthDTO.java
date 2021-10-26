@@ -16,4 +16,5 @@ public class DoctorAuthDTO {
     Long id;
     String name;
     List<String> authorities;
+    List<PatientDTO> patient;
 }
