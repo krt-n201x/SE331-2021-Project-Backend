@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se331.lab.rest.security.entity.UserDTO;
 
 import java.util.List;
 
@@ -16,5 +17,6 @@ public class DoctorDTO {
     String name;
     String surname;
     Integer age;
+    UserDTO user;
     List<DoctorPatientDTO> patient;
 }
