@@ -9,13 +9,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import se331.lab.rest.dao.DoctorDao;
 import se331.lab.rest.dao.PatientDao;
+import se331.lab.rest.entity.Doctor;
 import se331.lab.rest.entity.Patients;
+import se331.lab.rest.service.DoctorService;
 import se331.lab.rest.service.PatientService;
 import se331.lab.rest.util.LabMapper;
 
 @Controller
 public class PatientController {
+    @Autowired
+    DoctorService doctorService;
+    @Autowired
+    DoctorDao doctorDao;
     @Autowired
     PatientService patientService;
     @Autowired
@@ -48,6 +55,11 @@ public class PatientController {
         }
     }
 
+    @GetMapping("admin")
+    public ResponseEntity<?> getUserLists() {
+        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(patientService.getAllUserVaccine()));
+    }
+
     @PostMapping("/patients")
     public ResponseEntity<?> addPatient(@RequestBody Patients Patient) {
         Patients output = patientService.save(Patient);
@@ -62,4 +74,28 @@ public class PatientController {
         Patients output = patientService.save(changeCom);   
         return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDto(output));
     }
+
+    @PostMapping("/savedtop")
+    public ResponseEntity<?> saveDtoP(@RequestBody Patients patient) {
+        Patients changeDoc = patientDao.findById(patient.getId()).orElse(null);
+        Doctor doctor = doctorDao.findById(patient.getDoctor().getId()).orElse(null);
+        changeDoc.setDoctor(patient.getDoctor());
+        doctor.getPatient().add(changeDoc);
+//        Doctor outputDoctor = doctorService.save(doctor);
+        Patients output = patientService.save(changeDoc);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDto(output));
+    }
+
+//    @PostMapping("/savedtop")
+//    public ResponseEntity<?> saveDtoP(@RequestBody Doctor doctor) {
+//        Doctor changedoctor = doctorDao.findById(doctor.getId()).orElse(null);
+//        Patients changeDoc = patientDao.findById(changedoctor.getPatient().).orElse(null);
+//
+//        changeDoc.setDoctor(patient.getDoctor());
+//        doctor.getPatient().add(changeDoc);
+////        Doctor outputDoctor = doctorService.save(doctor);
+//        Patients output = patientService.save(changeDoc);
+//        return ResponseEntity.ok(LabMapper.INSTANCE.getPatientDto(output));
+//    }
+
 }
