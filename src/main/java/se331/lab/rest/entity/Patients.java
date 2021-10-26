@@ -31,6 +31,6 @@ public class Patients {
     @Builder.Default
     List<Vaccine> vaccine = new ArrayList<>();
     @ElementCollection
-            @Builder.Default
+    @Builder.Default
     List<String> imageUrl = new ArrayList<>();
 }

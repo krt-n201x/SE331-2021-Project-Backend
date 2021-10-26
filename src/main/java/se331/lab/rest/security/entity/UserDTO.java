@@ -13,4 +13,6 @@ public class UserDTO {
     String username;
     String password;
     String email;
+    AuthorityDTO authority;
+    String id;
 }

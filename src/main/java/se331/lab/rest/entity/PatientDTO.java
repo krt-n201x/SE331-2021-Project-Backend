@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se331.lab.rest.security.entity.UserDTO;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.ManyToOne;
@@ -24,4 +25,7 @@ public class PatientDTO {
     String doctor_comm;
     PatientDoctorDTO doctor;
     List<PatientVaccineDTO> vaccine;
+    UserDTO user;
+    List<String> imageUrls;
+
 }
