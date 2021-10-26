@@ -50,7 +50,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         pat2 = patientRepository.save(Patients.builder()
                 .name("Will")
                 .surname("Smith")
-                .status("Taken 1 doses")
+                .status("Taken 2 doses")
                 .age(30)
                 .hometown("Chiang Rai, Thailand")
                 .doctor_comm("I love your muscle").build());
