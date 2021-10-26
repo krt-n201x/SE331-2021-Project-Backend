@@ -6,12 +6,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import se331.lab.rest.dao.DoctorDao;
 import se331.lab.rest.dao.PatientDao;
+import se331.lab.rest.dao.UserDao;
 import se331.lab.rest.dao.VaccineDao;
 import se331.lab.rest.entity.Doctor;
 import se331.lab.rest.entity.Patients;
 import se331.lab.rest.entity.Vaccine;
+import se331.lab.rest.security.entity.User;
 
 import javax.print.Doc;
+import java.util.List;
 
 @Service
 public class PatientServiceImpl implements PatientService{
@@ -19,6 +22,8 @@ public class PatientServiceImpl implements PatientService{
     PatientDao patientDao;
     @Autowired
     DoctorDao doctorDao;
+    @Autowired
+    UserDao userDao;
     @Autowired
     VaccineDao vaccineDao;
     @Override
@@ -47,5 +52,10 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public Page<Patients> getPatients(String title, Pageable pageable) {
         return patientDao.getPatient(title,pageable);
+    }
+
+    @Override
+    public List<User> getAllUserVaccine() {
+        return userDao.getUser(Pageable.unpaged()).getContent();
     }
 }

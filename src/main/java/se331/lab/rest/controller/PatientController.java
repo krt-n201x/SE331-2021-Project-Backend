@@ -48,6 +48,11 @@ public class PatientController {
         }
     }
 
+    @GetMapping("admin")
+    public ResponseEntity<?> getUserLists() {
+        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(patientService.getAllUserVaccine()));
+    }
+
     @PostMapping("/patients")
     public ResponseEntity<?> addPatient(@RequestBody Patients Patient) {
         Patients output = patientService.save(Patient);
