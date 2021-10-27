@@ -52,6 +52,8 @@ public class AuthenticationRestController {
     @Autowired
     DoctorRepository doctorRepository;
     @Autowired
+    DoctorDao doctorDao;
+    @Autowired
     PatientRepository patientRepository;
     @PostMapping("${jwt.route.authentication.path}")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
@@ -129,6 +131,23 @@ public class AuthenticationRestController {
         user.setEnabled(true);
         user.setPatient(pat);
         pat.setUser(user);
+        User output = userRepository.save(user);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDto(output));
+    }
+
+    @PostMapping("/roledoc")
+    public ResponseEntity<?> changeRoleDoc(@RequestBody Doctor doc) {
+        User user = userRepository.findById(doc.getUser().getId()).orElse(null);
+        user.setAuthorities(doc.getUser().getAuthorities());
+//        Doctor doctor = doctorDao.findById(user.getDoctor().getId()).orElse(null);
+        User output = userRepository.save(user);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDto(output));
+    }
+    @PostMapping("/rolepat")
+    public ResponseEntity<?> changeRolePat(@RequestBody Patients pat) {
+        User user = userRepository.findById(pat.getUser().getId()).orElse(null);
+        user.setAuthorities(pat.getUser().getAuthorities());
+//        Doctor doctor = doctorDao.findById(user.getDoctor().getId()).orElse(null);
         User output = userRepository.save(user);
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDto(output));
     }
