@@ -11,6 +11,7 @@ import se331.lab.rest.dao.VaccineDao;
 import se331.lab.rest.entity.Doctor;
 import se331.lab.rest.entity.Patients;
 import se331.lab.rest.entity.Vaccine;
+import se331.lab.rest.security.entity.Authority;
 import se331.lab.rest.security.entity.User;
 
 import javax.print.Doc;

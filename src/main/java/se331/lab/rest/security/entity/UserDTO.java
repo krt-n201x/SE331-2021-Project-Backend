@@ -21,6 +21,4 @@ public class UserDTO {
     String email;
     List<AuthorityDTO> authorities;
     String id;
-    DoctorAuthDTO doctor;
-    PatientAuthDTO patient;
 }

@@ -21,8 +21,11 @@ import se331.lab.rest.entity.Patients;
 import se331.lab.rest.repository.DoctorRepository;
 import se331.lab.rest.repository.PatientRepository;
 import se331.lab.rest.security.JwtTokenUtil;
+import se331.lab.rest.security.entity.Authority;
+import se331.lab.rest.security.entity.AuthorityName;
 import se331.lab.rest.security.entity.JwtUser;
 import se331.lab.rest.security.entity.User;
+import se331.lab.rest.security.repository.AuthorityRepository;
 import se331.lab.rest.security.repository.UserRepository;
 import se331.lab.rest.util.LabMapper;
 
@@ -51,6 +54,8 @@ public class AuthenticationRestController {
 
     @Autowired
     DoctorRepository doctorRepository;
+    @Autowired
+    AuthorityRepository authorityRepository;
     @Autowired
     DoctorDao doctorDao;
     @Autowired
@@ -136,19 +141,25 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("/roledoc")
-    public ResponseEntity<?> changeRoleDoc(@RequestBody Doctor doc) {
-        User user = userRepository.findById(doc.getUser().getId()).orElse(null);
-        user.setAuthorities(doc.getUser().getAuthorities());
+    public ResponseEntity<?> changeRoleDoc(@RequestParam(value = "role", required = false) String role,
+                                           @RequestParam(value = "id", required = false) Long id) {
+        Doctor doc = doctorRepository.findById(id).orElse(null);
+        AuthorityName name = AuthorityName.valueOf(role);
+        Authority auth = authorityRepository.findByName(name);
+        doc.getUser().getAuthorities().add(auth);
 //        Doctor doctor = doctorDao.findById(user.getDoctor().getId()).orElse(null);
-        User output = userRepository.save(user);
+        User output = userRepository.save(doc.getUser());
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDto(output));
     }
     @PostMapping("/rolepat")
-    public ResponseEntity<?> changeRolePat(@RequestBody Patients pat) {
-        User user = userRepository.findById(pat.getUser().getId()).orElse(null);
-        user.setAuthorities(pat.getUser().getAuthorities());
+    public ResponseEntity<?> changeRolePat(@RequestParam(value = "role", required = false) String role,
+                                           @RequestParam(value = "id", required = false) Long id) {
+        Patients pat = patientRepository.findById(id).orElse(null);
+        AuthorityName name = AuthorityName.valueOf(role);
+        Authority auth = authorityRepository.findByName(name);
+        pat.getUser().getAuthorities().add(auth);
 //        Doctor doctor = doctorDao.findById(user.getDoctor().getId()).orElse(null);
-        User output = userRepository.save(user);
+        User output = userRepository.save(pat.getUser());
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDto(output));
     }
 
