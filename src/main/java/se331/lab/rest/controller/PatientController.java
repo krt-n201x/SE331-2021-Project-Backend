@@ -35,7 +35,7 @@ public class PatientController {
     @GetMapping("patients")
     public ResponseEntity<?> getPatientLists(@RequestParam(value = "_limit", required = false) Integer perPage
             , @RequestParam(value = "_page", required = false) Integer page, @RequestParam(value = "name", required = false) String title) {
-        perPage = perPage == null ? 3 : perPage;
+        perPage = perPage == null ? 50 : perPage;
         page = page == null ? 1 : page;
         Page<Patients> pageOutput;
         if (title == null) {
