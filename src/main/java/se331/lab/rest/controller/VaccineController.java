@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import se331.lab.rest.dao.PatientDao;
+import se331.lab.rest.entity.Doctor;
+import se331.lab.rest.entity.Patients;
 import se331.lab.rest.entity.Vaccine;
 import se331.lab.rest.service.VaccineService;
 import se331.lab.rest.util.LabMapper;
@@ -17,6 +20,9 @@ import se331.lab.rest.util.LabMapper;
 public class VaccineController {
     @Autowired
     VaccineService vaccineService;
+
+    @Autowired
+    PatientDao patientDao;
     
     @GetMapping("vaccines")
     public ResponseEntity<?> getVaccineLists(@RequestParam(value = "_limit", required = false) Integer perPage
@@ -44,5 +50,11 @@ public class VaccineController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }
+    }
+
+    @PostMapping("/addvac")
+    public ResponseEntity<?> addVac(@RequestBody Vaccine vaccine) {
+        Vaccine output = vaccineService.save(vaccine);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getVaccineDto(output));
     }
 }
